@@ -11,15 +11,13 @@ username = getattr(_User, 'USERNAME_FIELD', None) or \
            None
 fieldnames = ('first_name', 'last_name', 'email', username)
 all_names = _User._meta.get_all_field_names()
-user_search_fields = ['user__' + name for name in fieldnames
-                            if name and name in all_names]
+user_search_fields = ['provider', 'user']
 
 
 class UserSocialAuthOption(admin.ModelAdmin):
     """Social Auth user options"""
     list_display = ('id', 'user', 'provider', 'uid')
     search_fields = user_search_fields
-    list_filter = ('provider',)
     raw_id_fields = ('user',)
     list_select_related = True
 
@@ -33,7 +31,6 @@ class NonceOption(admin.ModelAdmin):
 class AssociationOption(admin.ModelAdmin):
     """Association options"""
     list_display = ('id', 'server_url', 'assoc_type')
-    list_filter = ('assoc_type',)
     search_fields = ('server_url',)
 
 

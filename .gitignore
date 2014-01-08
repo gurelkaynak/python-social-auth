@@ -41,3 +41,7 @@ _build/
 fabfile.py
 
 .DS_Store
+
+# Vim
+*.swp
+*.swo

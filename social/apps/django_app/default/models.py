@@ -13,6 +13,7 @@ from social.storage.django_orm import DjangoUserMixin, \
                                       BaseDjangoStorage
 from social.apps.django_app.default.fields import JSONField
 
+from django_mongodb_engine.contrib import MongoDBManager
 
 USER_MODEL = getattr(settings, setting_name('USER_MODEL'), None) or \
              getattr(settings, 'AUTH_USER_MODEL', None) or \
@@ -32,6 +33,8 @@ class UserSocialAuth(models.Model, DjangoUserMixin):
     provider = models.CharField(max_length=32)
     uid = models.CharField(max_length=UID_LENGTH)
     extra_data = JSONField()
+
+    objects = MongoDBManager()
 
     class Meta:
         """Meta data"""
@@ -79,6 +82,8 @@ class Association(models.Model, DjangoAssociationMixin):
     issued = models.IntegerField()
     lifetime = models.IntegerField()
     assoc_type = models.CharField(max_length=64)
+
+    objects = MongoDBManager()
 
     class Meta:
         db_table = 'social_auth_association'
